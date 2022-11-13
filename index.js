@@ -5,6 +5,15 @@ const dotenv = require('dotenv');
 const app = express();
 dotenv.config();
 
+const boton_enviarRoutes = require('./routes/boton_enviarRoutes');
+const comentarioRoutes = require('./routes/comentarioRoutes');
+app.use(cors());
+app.use(express.json());
+app.options('*',cors());
+app.use('/api', boton_enviarRoutes);
+app.use('/api', comentarioRoutes);
+
+
 const options = {
     useNewURLParser: true,
     autoIndex: true,
@@ -22,6 +31,6 @@ mongoose.connect(process.env.DB,options,(error)=>{
     }
 });
 
-app.listen(3000,() => {
+app.listen(process.env.PORT, () => {
     console.log(`Server started on port ${process.env.PORT}`);
 });
